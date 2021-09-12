@@ -1,0 +1,29 @@
+import os
+import boto3
+
+def get_ec2_instances(region, project, service, state):
+    ec2_instances = []
+    ec2 = boto3.resource('ec2', region_name=region)
+    
+    filter = [
+        {
+        'Name':'tag:Pod',
+        'Values': [project]
+        },
+        {
+        'Name':'tag:Service',
+        'Values': [service]
+        },
+        { 'Name':'instance-state-name',
+        'Values': [state]
+        }
+    ]
+    
+    for instance in ec2.instances.filter(Filters=filter):
+        ip = instance.private_ip_address
+        state_name = instance.state['Name']
+        print("ip:{}, state:{}".format(ip, state_name))
+        print("state:{}".format(state_name))
+        ec2_instances.append(instance)
+        
+    return ec2_instances
