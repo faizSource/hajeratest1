@@ -1,0 +1,53 @@
+import os
+import boto3
+
+def get_ec2_instances(region, service, state) :
+    ec2_instances = []
+    ec2 = boto3.resource('ec2', region_name=region)
+    
+    filter = [
+        {
+        'Name':'tag:Service',
+        'Values': [service]
+        },
+        { 'Name':'instance-state-name',
+        'Values': [state]
+        }
+    ]
+    
+    for instance in ec2.instances.filter(Filters=filter):
+        ip = instance.private_ip_address
+        state_name = instance.state['Name']
+        print("ip:{}, state:{}".format(ip, state_name))
+        print("state:{}".format( state_name))
+        ec2_instances.append(instance)
+        
+    return ec2_instances
+        
+def start_ec2_instance(region, service) :
+    instances_to_stop = get_ec2_instances(region, service, 'stopped')
+    instance_state_changed = 0 
+    for instances in instances_to_stop:
+        instances.start()
+        instance_state_changed += 1
+    return instance_state_changed
+
+def stop_ec2_instance(region, service) :
+    instances_to_stop = get_ec2_instances(region, service, 'running')
+    instance_state_changed = 0
+    for instances in instances_to_stop:
+        instances.stop()
+        instance_state_changed += 1
+    return instance_state_changed
+    
+    
+def lambda_handler(event, context):
+    
+    service = os.getenv('Service', 'hajera')
+    region = os.getenv('REGION', 'us-east-2')
+    instance_state_changed = 0 
+    if (event.get('action')== 'start'):
+        instance_state_changed = start_ec2_instance(region, service)
+    elif (event.get('action')== 'stop') :
+        instance_state_changed = stop_ec2_instance(region, service)
+    return instance_state_changed
