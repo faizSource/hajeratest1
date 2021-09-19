@@ -1,0 +1,84 @@
+{
+	"nmaprun": 
+	{
+		"@scanner": "nmap",
+		"@args": "nmap -sP -PI -PT -oX /tmp/nmap_out.xml 10.94.208.1/24",
+		"@start": "1631973107",
+		"@startstr": "Sat Sep 18 19:21:47 2021",
+		"@version": "7.40",
+		"@xmloutputversion": "1.04",
+		"verbose": {
+			"@level": "0"
+		},
+		"debugging": {
+			"@level": "0"
+		},
+		"host": [
+			{
+				"status": {
+					"@state": "up",
+					"@reason": "conn-refused",
+					"@reason_ttl": "0"
+				},
+				"address": {
+					"@addr": "10.94.208.1",
+					"@addrtype": "ipv4"
+				},
+				"hostnames": null,
+				"times": {
+					"@srtt": "922",
+					"@rttvar": "3902",
+					"@to": "100000"
+				}
+			},
+			{
+				"status": {
+					"@state": "up",
+					"@reason": "conn-refused",
+					"@reason_ttl": "0"
+				},
+				"address": {
+					"@addr": "10.94.208.2",
+					"@addrtype": "ipv4"
+				},
+				"hostnames": null,
+				"times": {
+					"@srtt": "593",
+					"@rttvar": "5000",
+					"@to": "100000"
+				}
+			},
+			{
+				"status": {
+					"@state": "up",
+					"@reason": "conn-refused",
+					"@reason_ttl": "0"
+				},
+				"address": {
+					"@addr": "10.94.208.63",
+					"@addrtype": "ipv4"
+				},
+				"hostnames": null,
+				"times": {
+					"@srtt": "934",
+					"@rttvar": "5000",
+					"@to": "100000"
+				}
+			}
+		],
+		"runstats": {
+			"finished": {
+				"@time": "1631973125",
+				"@timestr": "Sat Sep 18 19:22:05 2021",
+				"@elapsed": "18.41",
+				"@summary": "Nmap done at Sat Sep 18 19:22:05 2021; 256 IP addresses (3 hosts up) scanned in 18.41 seconds",
+				"@exit": "success"
+			},
+			"hosts": {
+				"@up": "3",
+				"@down": "253",
+				"@total": "256"
+			}
+		}
+	}
+}
